@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2024-07-08
+Add logging around communication point with MagicBell
+
 ## [2.2.0] - 2024-03-12
 Update to support push subscription endpoint
 

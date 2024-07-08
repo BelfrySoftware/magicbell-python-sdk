@@ -1,9 +1,12 @@
+import logging
 import typing
 
 from ..model.notification import WrappedCreatedNotificationBroadcast, WrappedNotification
 from ..model.response import Response
 from ._base import BaseAPI
 from ._parsing import build_request_content, build_response
+
+logger = logging.getLogger(__name__)
 
 
 class RealtimeAPI(BaseAPI):
@@ -31,9 +34,13 @@ class RealtimeAPI(BaseAPI):
         Specify `idempotency_key` to prevent duplicate notifications.
         https://www.magicbell.com/docs/rest-api/idempotent-requests
         """
-        response = await self.client.post(
-            "/broadcasts",
-            headers=self.configuration.get_general_headers(idempotency_key=idempotency_key),
-            content=build_request_content(wrapped_notification),
-        )
-        return build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
+        try:
+            response = await self.client.post(
+                "/broadcasts",
+                headers=self.configuration.get_general_headers(idempotency_key=idempotency_key),
+                content=build_request_content(wrapped_notification),
+            )
+            return build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
+        except Exception as e:
+            logger.error(f"Error sending {wrapped_notification} to magicbell: {e}", exc_info=True)
+            raise e
