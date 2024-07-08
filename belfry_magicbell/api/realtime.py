@@ -1,11 +1,10 @@
-import typing
 import logging
+import typing
 
 from ..model.notification import WrappedCreatedNotificationBroadcast, WrappedNotification
 from ..model.response import Response
 from ._base import BaseAPI
 from ._parsing import build_request_content, build_response
-
 
 logger = logging.getLogger(__name__)
 
