@@ -43,3 +43,4 @@ class RealtimeAPI(BaseAPI):
             return build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
         except Exception as e:
             logger.error(f"Error sending {wrapped_notification} to magicbell: {e}", exec_info=True)
+            raise e
