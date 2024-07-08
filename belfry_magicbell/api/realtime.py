@@ -8,6 +8,7 @@ from ._parsing import build_request_content, build_response
 
 logger = logging.getLogger(__name__)
 
+
 class RealtimeAPI(BaseAPI):
     """APIs to manage notifications in real-time"""
 
