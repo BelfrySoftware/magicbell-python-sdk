@@ -44,5 +44,5 @@ class RealtimeAPI(BaseAPI):
         except Exception as e:
             rc = response.content
             logger.warning(f"Error sending {wrapped_notification} to magicbell; response - {rc}",
-                            exc_info=True)
+                           exc_info=True)
             raise e
