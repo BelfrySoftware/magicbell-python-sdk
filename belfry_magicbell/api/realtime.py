@@ -42,5 +42,5 @@ class RealtimeAPI(BaseAPI):
             )
             return build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
         except Exception as e:
-            logger.warning(f"Error sending {wrapped_notification} to magicbell; responmse - {response.content}", exc_info=True)
+            logger.warning(f"Error sending {wrapped_notification} to magicbell; response - {response.content}", exc_info=True)
             raise e
