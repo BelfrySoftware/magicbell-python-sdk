@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2024-08-01
+Fallback deserialization logic to deal with magicbell issue + new list push subscription endpoint
+
 ## [2.2.2] - 2024-07-18
 Make logging of magic bell errors a warning. Log error response content
 
