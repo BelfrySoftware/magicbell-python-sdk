@@ -23,3 +23,9 @@ class PushSubscription(BaseModel):
 
 class WrappedPushSubscription(BaseModel):
     push_subscription: PushSubscription
+
+
+class ListPushSubscriptionsResponse(BaseModel):
+    per_page: int
+    current_page: int
+    push_subscriptions: typing.List[PushSubscription]
