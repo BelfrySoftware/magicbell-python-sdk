@@ -1,5 +1,8 @@
 import logging
+import json
 import typing
+
+from pydantic import ValidationError
 
 from ..model.notification import WrappedCreatedNotificationBroadcast, WrappedNotification
 from ..model.response import Response
@@ -34,15 +37,30 @@ class RealtimeAPI(BaseAPI):
         Specify `idempotency_key` to prevent duplicate notifications.
         https://www.magicbell.com/docs/rest-api/idempotent-requests
         """
+        response = None
         try:
             response = await self.client.post(
                 "/broadcasts",
                 headers=self.configuration.get_general_headers(idempotency_key=idempotency_key),
                 content=build_request_content(wrapped_notification),
             )
-            return build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
+            try:
+                wrapped_response = build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
+            except ValidationError as e:
+                """
+                Intentionally only catch ValidationError to handle the case where magicbell returns the response as a JSON string instead of JSON, otherwise exception keeps raising.
+
+                Within the outer try except to ensure if the json.loads(...) throws again it is still caught.
+                """
+                logger.warning(f"Falling back to json loads for request")
+                response.content = json.loads(response.content)
+                wrapped_response = build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
+            return wrapped_response
         except Exception as e:
-            rc = response.content
+            if response:
+                rc = response.content
+            else:
+                rc = "No response, failed during post"
             logger.warning(
                 f"Error sending {wrapped_notification} to magicbell; response - {rc}", exc_info=True
             )
