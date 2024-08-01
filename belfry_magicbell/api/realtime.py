@@ -48,13 +48,13 @@ class RealtimeAPI(BaseAPI):
                 wrapped_response = build_response(
                     response=response, out_type=WrappedCreatedNotificationBroadcast
                 )
-            except ValidationError as e:
+            except ValidationError:
                 """
                 Intentionally only catch ValidationError to handle the case where magicbell returns the response as a JSON string instead of JSON, otherwise exception keeps raising.
 
                 Within the outer try except to ensure if the json.loads(...) throws again it is still caught.
                 """
-                logger.warning(f"Falling back to json loads for request")
+                logger.warning("Falling back to json loads for request")
                 response.content = json.loads(response.content)
                 wrapped_response = build_response(
                     response=response, out_type=WrappedCreatedNotificationBroadcast
