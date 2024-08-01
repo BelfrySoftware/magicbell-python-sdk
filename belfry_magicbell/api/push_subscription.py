@@ -38,9 +38,7 @@ class PushSubscriptionAPI(BaseAPI):
         )
         return build_response(response=response, out_type=None)
 
-    async def list_push_subscriptions(
-        self, external_id: str
-    ) -> Response[typing.Type[None]]:
+    async def list_push_subscriptions(self, external_id: str) -> Response[typing.Type[None]]:
         """
         Lists the registered device tokens for a given officer id (external id).
 
