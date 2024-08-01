@@ -1,6 +1,6 @@
 import typing
 
-from ..model.push_subscription import WrappedPushSubscription
+from ..model.push_subscription import UserPushSubscriptions, WrappedPushSubscription
 from ..model.response import Response
 from ._base import BaseAPI
 from ._parsing import build_request_content, build_response
@@ -37,3 +37,17 @@ class PushSubscriptionAPI(BaseAPI):
             url, headers=self.configuration.get_user_external_id_headers(external_id=external_id)
         )
         return build_response(response=response, out_type=None)
+
+    async def read_push_subscriptions(
+        self, external_id: str
+    ) -> Response[typing.Type[None]]:
+        """
+        Reads the registered device tokens for a given officer id (external id).
+
+        Ref: https://www.magicbell.com/docs/rest-api/reference#push-subscriptions-delete
+        """
+        url = f"/push_subscriptions"
+        response = await self.client.get(
+            url, headers=self.configuration.get_user_external_id_headers(external_id=external_id)
+        )
+        return build_response(response=response, out_type=UserPushSubscriptions)
