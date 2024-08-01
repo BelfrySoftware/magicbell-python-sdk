@@ -1,5 +1,5 @@
-import logging
 import json
+import logging
 import typing
 
 from pydantic import ValidationError
@@ -45,7 +45,9 @@ class RealtimeAPI(BaseAPI):
                 content=build_request_content(wrapped_notification),
             )
             try:
-                wrapped_response = build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
+                wrapped_response = build_response(
+                    response=response, out_type=WrappedCreatedNotificationBroadcast
+                )
             except ValidationError as e:
                 """
                 Intentionally only catch ValidationError to handle the case where magicbell returns the response as a JSON string instead of JSON, otherwise exception keeps raising.
@@ -54,7 +56,9 @@ class RealtimeAPI(BaseAPI):
                 """
                 logger.warning(f"Falling back to json loads for request")
                 response.content = json.loads(response.content)
-                wrapped_response = build_response(response=response, out_type=WrappedCreatedNotificationBroadcast)
+                wrapped_response = build_response(
+                    response=response, out_type=WrappedCreatedNotificationBroadcast
+                )
             return wrapped_response
         except Exception as e:
             if response:
