@@ -18,7 +18,10 @@ def check_response(response: httpx.Response) -> None:
 
 
 def build_response(
-    *, response: httpx.Response, out_type: typing.Optional[typing.Type[ResponseBodyT]], content_override = None
+    *,
+    response: httpx.Response,
+    out_type: typing.Optional[typing.Type[ResponseBodyT]],
+    content_override: str | None = None
 ) -> Response[ResponseBodyT]:
     """Transform an `httpx.Response` into a `Response`.
 

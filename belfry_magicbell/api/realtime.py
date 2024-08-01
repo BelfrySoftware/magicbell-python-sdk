@@ -56,7 +56,9 @@ class RealtimeAPI(BaseAPI):
                 """
                 logger.warning("Falling back to json loads for request")
                 wrapped_response = build_response(
-                    response=response, out_type=WrappedCreatedNotificationBroadcast, content_override=json.loads(response.content)
+                    response=response,
+                    out_type=WrappedCreatedNotificationBroadcast,
+                    content_override=json.loads(response.content),
                 )
             return wrapped_response
         except Exception as e:
