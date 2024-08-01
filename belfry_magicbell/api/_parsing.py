@@ -18,7 +18,7 @@ def check_response(response: httpx.Response) -> None:
 
 
 def build_response(
-    *, response: httpx.Response, out_type: typing.Optional[typing.Type[ResponseBodyT]]
+    *, response: httpx.Response, out_type: typing.Optional[typing.Type[ResponseBodyT]], content_override = None
 ) -> Response[ResponseBodyT]:
     """Transform an `httpx.Response` into a `Response`.
 
@@ -27,11 +27,13 @@ def build_response(
 
     check_response(response)
 
+    response_content = response.content if content_override is None else content_override
+
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=out_type.model_validate_json(response.content) if out_type else None,
+        parsed=out_type.model_validate_json(response_content) if out_type else None,
     )
 
 

@@ -55,9 +55,8 @@ class RealtimeAPI(BaseAPI):
                 Within the outer try except to ensure if the json.loads(...) throws again it is still caught.
                 """
                 logger.warning("Falling back to json loads for request")
-                response.content = json.loads(response.content)
                 wrapped_response = build_response(
-                    response=response, out_type=WrappedCreatedNotificationBroadcast
+                    response=response, out_type=WrappedCreatedNotificationBroadcast, content_override=json.loads(response.content)
                 )
             return wrapped_response
         except Exception as e:
