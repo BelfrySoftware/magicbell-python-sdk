@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [2.3.1] - 2024-08-01
+Fix hash in poetry lock
+
+## [2.3.1] - 2024-08-01
 Fix bug in response content handling
 
 ## [2.3.0] - 2024-08-01
