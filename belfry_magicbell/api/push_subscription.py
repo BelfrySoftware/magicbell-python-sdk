@@ -46,7 +46,7 @@ class PushSubscriptionAPI(BaseAPI):
 
         Ref: https://www.magicbell.com/docs/rest-api/reference#push-subscriptions-list
         """
-        url = f"/push_subscriptions"
+        url = "/push_subscriptions"
         response = await self.client.get(
             url, headers=self.configuration.get_user_external_id_headers(external_id=external_id)
         )
